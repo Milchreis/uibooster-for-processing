@@ -1,0 +1,14 @@
+bin
+tmp
+distribution
+/resources/code/
+
+# IntelliJ
+*.iml
+.idea
+
+# Eclipse
+.classpath
+.project
+
+/classes/
