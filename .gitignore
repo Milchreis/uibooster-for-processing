@@ -1,7 +1,6 @@
 bin
 tmp
 distribution
-/resources/code/
 
 # IntelliJ
 *.iml
