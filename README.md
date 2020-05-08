@@ -17,7 +17,7 @@ If you want to use this library in your processing sketch you can download it vi
 ![alt install](https://github.com/milchreis/uibooster-for-processing/blob/master/img/install.jpg?raw=true)
 
 # Documentation
-The following examples show the usage of this libary. If you interessted in the javadoc documentation [look here.](https://milchreis.github.io/uibooster-for-processing/reference/uibooster/UiBooster.html)
+The following examples show the usage of this library. If you interessted in the javadoc documentation [look here.](https://milchreis.github.io/uibooster-for-processing/reference/uibooster/UiBooster.html)
 
 ## Components
 
