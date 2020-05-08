@@ -12,9 +12,12 @@ If you like this project, and you want to keep me awake 🤪, than please suppor
 
 <a href='https://ko-fi.com/L4L21072C' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi1.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
-# Installation
+## Installation
 If you want to use this library in your processing sketch you can download it via the integrated `Contribution Manager`. 
 ![alt install](https://github.com/milchreis/uibooster-for-processing/blob/master/img/install.jpg?raw=true)
+
+# Documentation
+The following examples show the usage of this libary. If you interessted in the javadoc documentation [look here.](https://milchreis.github.io/uibooster-for-processing/reference/uibooster/UiBooster.html)
 
 ## Components
 
@@ -220,11 +223,11 @@ UiBooster booster = new UiBooster(
 );
 ```
 
-# Contribution
+## Contribution
 Please report issues for bugs or feature requests with ideas for other useful dialogs. If you interested in the development
 process, take a look to the origin project [UiBooster](https://github.com/milchreis/UiBooster/).
 
-# Updating UiBooster for Processing
+## Updating UiBooster for Processing
 The port of UiBooster works as copy from the original project with some package adjustments. An update script pulls
 the current UiBooster code and replace it with the code from this library. New features from UiBooster are 
 added as examples, and the README.md has been updated.
