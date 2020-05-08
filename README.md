@@ -1,4 +1,7 @@
-# UiBooster for Processing
+<p align="center">
+  <img src="https://github.com/Milchreis/uibooster-for-processing/blob/master/img/logo.png?raw=true" />
+</p>
+
 > UiBooster is a lean library to create fast and easy dialogs for utility tools.
 
 This project ports [UiBooster 1.7](https://github.com/Milchreis/UiBooster/) full functionally to the Processing eco-system 
