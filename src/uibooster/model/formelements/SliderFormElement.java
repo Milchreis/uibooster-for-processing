@@ -2,6 +2,7 @@ package uibooster.model.formelements;
 
 import uibooster.components.Form;
 import uibooster.model.FormElement;
+import uibooster.model.FormElementChangeListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,13 +11,11 @@ import static uibooster.components.SliderDialog.createSlider;
 
 public class SliderFormElement extends FormElement {
 
-    private JLabel current;
     private JSlider slider;
+    private final int min, max, init, majorTick, minorTick;
 
-    private int min, max, init, majorTick, minorTick;
-
-    public SliderFormElement(String label, int min, int max, int init, int majorTick, int minorTick) {
-        super(label, Form.InputType.SLIDER);
+    public SliderFormElement(String label, int min, int max, int init, int majorTick, int minorTick, int formIndex) {
+        super(label, Form.InputType.SLIDER, formIndex);
         this.min = min;
         this.max = max;
         this.init = init;
@@ -25,9 +24,9 @@ public class SliderFormElement extends FormElement {
     }
 
     @Override
-    public JComponent createComponent() {
+    public JComponent createComponent(FormElementChangeListener changeListener) {
 
-        current = new JLabel("1");
+        JLabel current = new JLabel("1");
         current.setHorizontalAlignment(JLabel.CENTER);
 
         slider = createSlider(min, max, init, majorTick, minorTick, current);
@@ -35,6 +34,10 @@ public class SliderFormElement extends FormElement {
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(current, BorderLayout.NORTH);
         panel.add(slider, BorderLayout.SOUTH);
+
+        if (changeListener != null) {
+            slider.addChangeListener(e -> changeListener.onChange(SliderFormElement.this, getValue()));
+        }
 
         return panel;
     }

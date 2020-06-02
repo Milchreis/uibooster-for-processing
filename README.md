@@ -4,7 +4,7 @@
 
 > UiBooster is a lean library to create fast and easy dialogs for utility tools.
 
-This project ports [UiBooster 1.7](https://github.com/Milchreis/UiBooster/) full functionally to the Processing eco-system 
+This project ports [UiBooster 1.8](https://github.com/Milchreis/UiBooster/) full functionally to the Processing eco-system 
 as a library to create dialogs for your sketch fast as possible.
 With a lot of examples you will learn to use this library in less than five minutes.
 
@@ -24,6 +24,7 @@ The following examples show the usage of this library. If you interested in the 
  - [Information dialogs](#information-dialogs)
  - [Text input dialog](#text-input-dialog)
  - [Confirmation dialog](#confirmation-dialog)
+ - [Password input dialog](#password-input-dialog)
  - [Selection dialog](#selection-dialog)
  - [Slider dialog](#slider-dialog)
  - [Colorpicker](#colorpicker)
@@ -67,6 +68,12 @@ new UiBooster().showConfirmDialog(
                 "Are you sure?",
                 () -> System.out.println("Action accepted"),
                 () -> System.out.println("Action declined"));
+```
+
+### Password input dialog
+![screenshot password dialog](https://github.com/Milchreis/UiBooster/blob/master/screenshots/password.jpg?raw=true)
+```java
+String password = booster.showPasswordDialog("Whats your password?", "Password");
 ```
 
 ### Selection dialog
