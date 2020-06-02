@@ -6,9 +6,11 @@
 
 import uibooster.*;
 import uibooster.model.*;
+import uibooster.components.*;
 
 UiBooster booster;
 WaitingDialog waitingDialog;
+LoginCredentials credentials;
 
 void setup() {
   size(800, 400);
@@ -20,8 +22,16 @@ void setup() {
   // delay is just for presentation
   delay(1500);
 
-  dialog.setMessage("Ready");
-  dialog.close();
+  waitingDialog.setMessage("Ready");
+  waitingDialog.close();
+  
+  credentials = new UiBooster().showLogin(
+        "Login",
+        "Internal area",
+        "Username",
+        "Password",
+        "Go",
+        "Cancel");
 }
 
 void draw() {
