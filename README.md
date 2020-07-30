@@ -20,6 +20,7 @@ A big thank you goes to the supporters of this project. I thank every single one
 
 ## Installation
 If you want to use this library in your processing sketch you can download it via the integrated `Contribution Manager`. 
+
 ![alt install](https://github.com/milchreis/uibooster-for-processing/blob/master/img/install.jpg?raw=true)
 
 # Documentation
