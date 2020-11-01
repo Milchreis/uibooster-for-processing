@@ -2,7 +2,9 @@ package uibooster;
 
 import com.bulenkov.darcula.DarculaLaf;
 import uibooster.components.*;
+import uibooster.model.ListElement;
 import uibooster.model.LoginCredentials;
+import uibooster.model.SelectElementListener;
 import uibooster.model.UiBoosterOptions;
 
 import javax.swing.*;
@@ -22,7 +24,7 @@ import static uibooster.utils.ParameterValidator.nonNull;
  */
 public class UiBooster {
 
-    private UiBoosterOptions options;
+    private final UiBoosterOptions options;
 
     public UiBooster() {
         this(new UiBoosterOptions(UiBoosterOptions.Theme.DARK_THEME));
@@ -35,6 +37,8 @@ public class UiBooster {
 
             try {
                 if (options.getTheme() == UiBoosterOptions.Theme.DARK_THEME) {
+                    // Little hack to start working on linux
+                    javax.swing.UIManager.getFont("Label.font");
                     UIManager.setLookAndFeel(new DarculaLaf());
 
                 } else if (options.getTheme() == UiBoosterOptions.Theme.OS_NATIVE) {
@@ -42,6 +46,7 @@ public class UiBooster {
                 }
 
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
@@ -245,7 +250,20 @@ public class UiBooster {
      * @return returns the dialog object to change the message and hide the dialog as needed.
      */
     public WaitingDialog showWaitingDialog(String message, String title) {
-        return WaitingDialog.showDialog(message, title, options);
+        return WaitingDialog.showDialog(message, title, null, options, true);
+    }
+
+    /**
+     * Shows a waiting dialog with a changeable message.
+     * This dialog does not wait for any user input. Its decoupled from the rest of the application.
+     *
+     * @param message     optional message to the user
+     * @param title       expects a title for the window
+     * @param decorated   hides or shows the window title bar (true = show)
+     * @return            returns the dialog object to change the message and hide the dialog as needed.
+     */
+    public WaitingDialog showWaitingDialog(String message, String title, boolean decorated) {
+        return WaitingDialog.showDialog(message, title, null, options, decorated);
     }
 
     /**
@@ -258,7 +276,21 @@ public class UiBooster {
      * @return returns the dialog object to change the message and hide the dialog as needed.
      */
     public WaitingDialog showWaitingDialog(String message, String title, String largeText) {
-        return WaitingDialog.showDialog(message, title, largeText, options);
+        return WaitingDialog.showDialog(message, title, largeText, options, true);
+    }
+
+    /**
+     * Shows a waiting dialog with a changeable message.
+     * This dialog does not wait for any user input. Its decoupled from the rest of the application.
+     *
+     * @param message     optional message to the user
+     * @param title       expects a title for the window
+     * @param decorated   hides or shows the window title bar (true = show)
+     * @param largeText   optional large message
+     * @return            returns the dialog object to change the message and hide the dialog as needed.
+     */
+    public WaitingDialog showWaitingDialog(String message, String title, String largeText, boolean decorated) {
+        return WaitingDialog.showDialog(message, title, largeText, options, decorated);
     }
 
     /**
@@ -476,5 +508,44 @@ public class UiBooster {
      */
     public Splashscreen showSplashscreen(String imagePath, int lifeTimeInMillis) {
         return new Splashscreen(imagePath, lifeTimeInMillis, 1, options.getIconPath());
+    }
+
+    /**
+     * Shows a list with a headline, a message part and an image.
+     * The dialogs blocks the process until it's closed.
+     *
+     * @param message  expects a message for the meaning of this selection
+     * @param title    expects a title for the window
+     * @param elements expects the elements used for the list
+     * @return the selected value or null if the dialog was closed
+     */
+    public ListElement showList(String message, String title, ListElement... elements) {
+        return ListDialog.showList(message, title, options.getIconPath(), elements);
+    }
+
+    /**
+     * Shows a list with a headline, a message part and an image.
+     * The dialogs blocks the process until it's closed.
+     *
+     * @param message  expects a message for the meaning of this selection
+     * @param title    expects a title for the window
+     * @param onSelect expects a callback implementation when a elements was selected
+     * @param elements expects the elements used for the list
+     * @return the selected value or null if the dialog was closed
+     */
+    public ListElement showList(String message, String title, SelectElementListener onSelect, ListElement... elements) {
+        return ListDialog.showList(message, title, options.getIconPath(), onSelect, elements);
+    }
+
+    /**
+     * Shows an exception stack trace in a dialog
+     * The dialogs blocks the process until it's closed.
+     *
+     * @param message   expects a message for the meaning of this selection
+     * @param title     expects a title for the window
+     * @param exception excepts an exception to show the stacktrace
+     */
+    public void showException(String message, String title, Exception exception) {
+        ExceptionDialog.showDialog(message, title, options, exception);
     }
 }
