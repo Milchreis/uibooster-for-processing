@@ -1,6 +1,5 @@
 package uibooster.model.formelements;
 
-import uibooster.components.Form;
 import uibooster.model.FormElement;
 import uibooster.model.FormElementChangeListener;
 
@@ -12,8 +11,8 @@ public class SelectionFormElement extends FormElement {
     private final List<String> possibilities;
     private JComboBox<String> box;
 
-    public SelectionFormElement(String label, int formIndex, List<String> possibilities) {
-        super(label, Form.InputType.SELECTION, formIndex);
+    public SelectionFormElement(String label, List<String> possibilities) {
+        super(label);
         this.possibilities = possibilities;
     }
 
@@ -26,6 +25,11 @@ public class SelectionFormElement extends FormElement {
         }
 
         return box;
+    }
+
+    @Override
+    public void setEnabled(boolean enable) {
+        box.setEnabled(enable);
     }
 
     @Override

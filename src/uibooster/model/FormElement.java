@@ -1,7 +1,5 @@
 package uibooster.model;
 
-import uibooster.components.Form;
-
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
@@ -9,24 +7,36 @@ import java.util.Date;
 
 public abstract class FormElement {
 
+    protected String id;
     protected String label;
-    protected final int formIndex;
-    protected Form.InputType inputType;
+    protected int formIndex;
 
-    public FormElement(String label, Form.InputType inputType, int formIndex) {
+    public FormElement(String label) {
         this.label = label;
-        this.inputType = inputType;
+    }
+
+    public void setFormIndex(int formIndex) {
         this.formIndex = formIndex;
     }
 
     public abstract JComponent createComponent(FormElementChangeListener onChange);
 
+    public abstract void setEnabled(boolean enable);
+
     public abstract Object getValue();
 
     public abstract void setValue(Object value);
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getLabel() {
         return label;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public int getIndex() {

@@ -1,6 +1,5 @@
 package uibooster.model.formelements;
 
-import uibooster.components.Form;
 import uibooster.model.FormElement;
 import uibooster.model.FormElementChangeListener;
 import org.jdesktop.swingx.JXDatePicker;
@@ -12,8 +11,8 @@ public class DatePickerElement extends FormElement {
 
     private final JXDatePicker picker;
 
-    public DatePickerElement(String label, int formIndex) {
-        super(label, Form.InputType.DATE_PICKER, formIndex);
+    public DatePickerElement(String label) {
+        super(label);
         picker = new JXDatePicker(new Date(System.currentTimeMillis()));
     }
 
@@ -24,6 +23,11 @@ public class DatePickerElement extends FormElement {
         }
 
         return picker;
+    }
+
+    @Override
+    public void setEnabled(boolean enable) {
+        picker.setEnabled(enable);
     }
 
     @Override

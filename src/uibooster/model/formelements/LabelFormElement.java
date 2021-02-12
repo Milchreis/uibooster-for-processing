@@ -1,6 +1,5 @@
 package uibooster.model.formelements;
 
-import uibooster.components.Form;
 import uibooster.model.FormElement;
 import uibooster.model.FormElementChangeListener;
 
@@ -10,14 +9,19 @@ public class LabelFormElement extends FormElement {
 
     private final JLabel label;
 
-    public LabelFormElement(String label, int formIndex) {
-        super(null, Form.InputType.LABEL, formIndex);
+    public LabelFormElement(String label) {
+        super(null);
         this.label = new JLabel(label);
     }
 
     @Override
     public JComponent createComponent(FormElementChangeListener onChange) {
         return label;
+    }
+
+    @Override
+    public void setEnabled(boolean enable) {
+        label.setEnabled(enable);
     }
 
     @Override

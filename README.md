@@ -4,7 +4,7 @@
 
 > UiBooster is a lean library to create fast and easy dialogs for utility tools.
 
-This project ports [UiBooster 1.9.0](https://github.com/Milchreis/UiBooster/) full functionally to the Processing eco-system 
+This project ports [UiBooster 1.10.0](https://github.com/Milchreis/UiBooster/) full functionally to the Processing eco-system 
 as a library to create dialogs for your sketch fast as possible.
 With a lot of examples you will learn to use this library in less than five minutes.
 
@@ -33,6 +33,7 @@ The following examples show the usage of this library. If you interested in the 
  - [Confirmation dialog](#confirmation-dialog)
  - [Password input dialog](#password-input-dialog)
  - [Selection dialog](#selection-dialog)
+ - [Multiple selection dialog](#multiple-selection-dialog)
  - [Slider dialog](#slider-dialog)
  - [Colorpicker](#colorpicker)
  - [Datepicker](#datepicker)
@@ -92,6 +93,16 @@ String selection = new UiBooster().showSelectionDialog(
         "What's your favorite movie?",
         "Favorite Movie?",
         Arrays.asList("Pulp Fiction", "Bambi", "The Godfather", "Hangover"));
+```
+
+### Multiple selection dialog
+![screenshot multiple selection dialog](https://github.com/Milchreis/UiBooster/blob/master/screenshots/multiselection.jpg?raw=true)
+```java
+ List<String> selectedElement = new UiBooster().showMultipleSelection(
+            "What are your favorite hobbies?",
+            "Your hobbies",
+            "Reading", "Traveling", "Fishing", "Music", "Gardening", "Sport", "Television",
+            "Video Games", "Crafting", "Bird Watching", "Collecting");
 ```
 
 ### Slider dialog
@@ -227,6 +238,7 @@ FilledForm form = booster.createForm("Personal information")
 
 // use .run() instead of show() to open the form without blocking.
 ```
+You can also add your own elements: [Look here](https://github.com/Milchreis/UiBooster/blob/master/src/test/java/de/milchreis/uibooster/CustomFormElementTest.java)
 
 ### Splash screen
 ![screenshot splash screen](https://github.com/Milchreis/UiBooster/blob/master/screenshots/splash.jpg?raw=true)

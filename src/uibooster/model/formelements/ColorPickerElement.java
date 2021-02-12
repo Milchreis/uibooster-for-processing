@@ -2,7 +2,6 @@ package uibooster.model.formelements;
 
 import com.bric.colorpicker.ColorPicker;
 import uibooster.components.ColorPickerDialog;
-import uibooster.components.Form;
 import uibooster.model.FormElement;
 import uibooster.model.FormElementChangeListener;
 
@@ -13,8 +12,8 @@ public class ColorPickerElement extends FormElement {
 
     private final ColorPicker picker;
 
-    public ColorPickerElement(String label, int formIndex) {
-        super(label, Form.InputType.COLOR_PICKER, formIndex);
+    public ColorPickerElement(String label) {
+        super(label);
         picker = ColorPickerDialog.createColorPicker();
     }
 
@@ -24,6 +23,11 @@ public class ColorPickerElement extends FormElement {
             picker.addColorListener(e -> changeListener.onChange(ColorPickerElement.this, getValue()));
         }
         return picker;
+    }
+
+    @Override
+    public void setEnabled(boolean enable) {
+        picker.setEnabled(enable);
     }
 
     @Override

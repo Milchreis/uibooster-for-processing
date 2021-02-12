@@ -1,6 +1,5 @@
 package uibooster.model.formelements;
 
-import uibooster.components.Form;
 import uibooster.model.FormElement;
 import uibooster.model.FormElementChangeListener;
 
@@ -10,16 +9,17 @@ import java.awt.event.KeyEvent;
 
 public class TextAreaFormElement extends FormElement {
 
-    private JTextArea area;
+    private final JTextArea area;
 
-    public TextAreaFormElement(String label, int formIndex) {
-        super(label, Form.InputType.TEXT_AREA, formIndex);
+    public TextAreaFormElement(String label, int rows, String initialText, boolean readOnly) {
+        super(label);
+        area = new JTextArea(initialText);
+        area.setEditable(!readOnly);
+        area.setRows(rows);
     }
 
     @Override
     public JComponent createComponent(FormElementChangeListener changeListener) {
-        area = new JTextArea();
-        area.setRows(3);
 
         if (changeListener != null) {
             area.addKeyListener(new KeyAdapter() {
@@ -31,6 +31,11 @@ public class TextAreaFormElement extends FormElement {
             });
         }
         return new JScrollPane(area);
+    }
+
+    @Override
+    public void setEnabled(boolean enable) {
+        area.setEnabled(enable);
     }
 
     @Override

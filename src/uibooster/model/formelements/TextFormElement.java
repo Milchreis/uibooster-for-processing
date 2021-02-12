@@ -1,6 +1,5 @@
 package uibooster.model.formelements;
 
-import uibooster.components.Form;
 import uibooster.model.FormElement;
 import uibooster.model.FormElementChangeListener;
 
@@ -10,15 +9,19 @@ import java.awt.event.KeyEvent;
 
 public class TextFormElement extends FormElement {
 
-    private JTextField textfield;
+    private final JTextField textfield;
 
-    public TextFormElement(String label, int formIndex) {
-        super(label, Form.InputType.TEXT, formIndex);
+    public TextFormElement(String label, String initialText) {
+        super(label);
+        textfield = new JTextField(initialText);
+
+        if (initialText != null) {
+            textfield.setCaretPosition(initialText.length());
+        }
     }
 
     @Override
     public JComponent createComponent(FormElementChangeListener changeListener) {
-        textfield = new JTextField();
 
         if (changeListener != null) {
             textfield.addKeyListener(new KeyAdapter() {
@@ -31,6 +34,11 @@ public class TextFormElement extends FormElement {
         }
 
         return textfield;
+    }
+
+    @Override
+    public void setEnabled(boolean enable) {
+        textfield.setEnabled(enable);
     }
 
     @Override

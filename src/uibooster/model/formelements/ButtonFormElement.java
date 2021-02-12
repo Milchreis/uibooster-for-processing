@@ -1,6 +1,5 @@
 package uibooster.model.formelements;
 
-import uibooster.components.Form;
 import uibooster.model.FormElement;
 import uibooster.model.FormElementChangeListener;
 
@@ -12,8 +11,8 @@ public class ButtonFormElement extends FormElement {
     private final Runnable onClick;
     private JButton button;
 
-    public ButtonFormElement(String label, String buttonLabel, int formIndex, Runnable onClick) {
-        super(label, Form.InputType.BUTTON, formIndex);
+    public ButtonFormElement(String label, String buttonLabel, Runnable onClick) {
+        super(label);
 
         this.buttonLabel = buttonLabel;
         this.onClick = onClick;
@@ -24,6 +23,11 @@ public class ButtonFormElement extends FormElement {
         button = new JButton(buttonLabel);
         button.addActionListener(l -> onClick.run());
         return button;
+    }
+
+    @Override
+    public void setEnabled(boolean enable) {
+        button.setEnabled(enable);
     }
 
     @Override
