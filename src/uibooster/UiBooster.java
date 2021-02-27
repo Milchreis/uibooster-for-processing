@@ -8,6 +8,7 @@ import uibooster.model.SelectElementListener;
 import uibooster.model.UiBoosterOptions;
 
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.awt.*;
 import java.io.File;
 import java.util.Arrays;
@@ -34,15 +35,20 @@ public class UiBooster {
         this.options = options == null ? new UiBoosterOptions() : options;
 
         if (options.getTheme() != null) {
-
             try {
                 if (options.getTheme() == UiBoosterOptions.Theme.DARK_THEME) {
                     // Little hack to start working on linux
-                    javax.swing.UIManager.getFont("Label.font");
+                    UIManager.getFont("Label.font");
                     UIManager.setLookAndFeel(new DarculaLaf());
 
                 } else if (options.getTheme() == UiBoosterOptions.Theme.OS_NATIVE) {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+                } else if (options.getTheme() == UiBoosterOptions.Theme.SWING) {
+                    UIManager.setLookAndFeel(new MetalLookAndFeel());
+
+                } else if (options.getTheme() == UiBoosterOptions.Theme.DEFAULT) {
+                    UIManager.setLookAndFeel(UIManager.getLookAndFeel());
                 }
 
             } catch (Exception e) {
@@ -207,6 +213,17 @@ public class UiBooster {
     }
 
     /**
+     * Shows a file selection dialog. Only files are shown and selectable
+     *
+     * @param description expects a short and readable description for the extensions
+     * @param extensions  expects one or more allowed extensions without the dot (f.e. bmp, png, pdf)
+     * @return returns the selection file or null on cancel
+     */
+    public File showFileSelection(String description, String... extensions) {
+        return FilesystemDialog.showFileSelectionDialog(description, extensions);
+    }
+
+    /**
      * Shows a directory selection dialog. Only directories are shown and selectable
      *
      * @return returns the selection directory or null on cancel
@@ -222,6 +239,17 @@ public class UiBooster {
      */
     public File showFileOrDirectorySelection() {
         return FilesystemDialog.showFileOrDirectorySelectionDialog();
+    }
+
+    /**
+     * Shows a selection dialog for files and directories.
+     *
+     * @param description expects a short and readable description for the extensions
+     * @param extensions  expects one or more allowed extensions without the dot (f.e. bmp, png, pdf)
+     * @return returns the selection or null on cancel
+     */
+    public File showFileOrDirectorySelection(String description, String... extensions) {
+        return FilesystemDialog.showFileOrDirectorySelectionDialog(description, extensions);
     }
 
     /**

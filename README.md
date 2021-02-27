@@ -4,7 +4,7 @@
 
 > UiBooster is a lean library to create fast and easy dialogs for utility tools.
 
-This project ports [UiBooster 1.10.0](https://github.com/Milchreis/UiBooster/) full functionally to the Processing eco-system 
+This project ports [UiBooster 1.11.0](https://github.com/Milchreis/UiBooster/) full functionally to the Processing eco-system 
 as a library to create dialogs for your sketch fast as possible.
 With a lot of examples you will learn to use this library in less than five minutes.
 
