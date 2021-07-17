@@ -1,14 +1,12 @@
 package uibooster;
 
-import com.bulenkov.darcula.DarculaLaf;
 import uibooster.components.*;
-import uibooster.model.ListElement;
-import uibooster.model.LoginCredentials;
-import uibooster.model.SelectElementListener;
-import uibooster.model.UiBoosterOptions;
+import uibooster.model.*;
+import uibooster.model.options.DarkUiBoosterOptions;
+import uibooster.model.options.OSNativeUiBoosterOptions;
+import uibooster.model.options.SwingUiBoosterOptions;
 
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.awt.*;
 import java.io.File;
 import java.util.Arrays;
@@ -28,32 +26,40 @@ public class UiBooster {
     private final UiBoosterOptions options;
 
     public UiBooster() {
-        this(new UiBoosterOptions(UiBoosterOptions.Theme.DARK_THEME));
+        this(new DarkUiBoosterOptions());
     }
 
     public UiBooster(UiBoosterOptions options) {
-        this.options = options == null ? new UiBoosterOptions() : options;
+        this.options = options;
+        try {
+            UIManager.setLookAndFeel(options.getLookAndFeel());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-        if (options.getTheme() != null) {
-            try {
-                if (options.getTheme() == UiBoosterOptions.Theme.DARK_THEME) {
-                    // Little hack to start working on linux
-                    UIManager.getFont("Label.font");
-                    UIManager.setLookAndFeel(new DarculaLaf());
+    public UiBooster(UiBoosterOptions.Theme options) {
+        this(options, null);
+    }
 
-                } else if (options.getTheme() == UiBoosterOptions.Theme.OS_NATIVE) {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
-                } else if (options.getTheme() == UiBoosterOptions.Theme.SWING) {
-                    UIManager.setLookAndFeel(new MetalLookAndFeel());
-
-                } else if (options.getTheme() == UiBoosterOptions.Theme.DEFAULT) {
-                    UIManager.setLookAndFeel(UIManager.getLookAndFeel());
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    public UiBooster(UiBoosterOptions.Theme options, String iconPath) {
+        switch (options) {
+            case SWING:
+                this.options = new SwingUiBoosterOptions(iconPath);
+                break;
+            case OS_NATIVE:
+                this.options = new OSNativeUiBoosterOptions(iconPath);
+                break;
+            case DARK_THEME:
+            default:
+                this.options = new DarkUiBoosterOptions(iconPath);
+                break;
+        }
+        try {
+            UIManager.setLookAndFeel(this.options.getLookAndFeel());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -444,8 +450,8 @@ public class UiBooster {
      * @param title expects a title for the window
      * @return the object to create and control the form dialog
      */
-    public Form createForm(String title) {
-        return new Form(title, options);
+    public FormBuilder createForm(String title) {
+        return new FormBuilder(title, options);
     }
 
 

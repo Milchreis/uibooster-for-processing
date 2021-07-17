@@ -4,7 +4,7 @@
 
 > UiBooster is a lean library to create fast and easy dialogs for utility tools.
 
-This project ports [UiBooster 1.11.0](https://github.com/Milchreis/UiBooster/) full functionally to the Processing eco-system 
+This project ports [UiBooster 1.13.1](https://github.com/Milchreis/UiBooster/) full functionally to the Processing eco-system 
 as a library to create dialogs for your sketch fast as possible.
 With a lot of examples you will learn to use this library in less than five minutes.
 
@@ -12,11 +12,26 @@ If you like this project, and you want to keep me awake 🤪, than please suppor
 
 <a href='https://ko-fi.com/L4L21072C' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi1.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
+## Breaking changes since version 1.12.0
+
+In version 1.12.0 of UiBooster the `ChangeListener` and the `FilledForm` are changed. Please check your code after updating if you
+used UiBooster in earlier versions before.
+
+**Breaking changes**
+* Now ChangeListener in form creation has 3 parameter: current form element, new value, your form
+    * you will have to add `Form form` as third parameter to your listener
+    * Here you can find an [example](https://github.com/Milchreis/UiBooster/blob/master/src/test/java/de/milchreis/uibooster/FormBuilderChangeListenerTest.java#L22)
+* `FilledForm` is renamed to `Form`
+    * you will have to change all FilledForms to Form (also in imports)
+    * Here you can find an [example](https://github.com/Milchreis/UiBooster/blob/master/src/test/java/de/milchreis/uibooster/CustomFormBuilderElementTest.java#L57)
+
+
 ## Supporter ❤️
-A big thank you goes to the supporters of this project. I thank every single one of them for contributing to UiBooster.
+A big thanks goes to the supporters of this project. I thank every single one of them for contributing to UiBooster.
 
  * federico-pepe ([GitHub](https://github.com/federico-pepe))
  * Devraj Joshi ([Twitter](https://twitter.com/DevrajJoshi))
+ * Ralf Leggett ([Github](https://github.com/ralfleggett))
 
 ## Installation
 If you want to use this library in your processing sketch you can download it via the integrated `Contribution Manager`. 
@@ -28,27 +43,27 @@ The following examples show the usage of this library. If you interested in the 
 
 ## Components
 
- - [Information dialogs](#information-dialogs)
- - [Text input dialog](#text-input-dialog)
- - [Confirmation dialog](#confirmation-dialog)
- - [Password input dialog](#password-input-dialog)
- - [Selection dialog](#selection-dialog)
- - [Multiple selection dialog](#multiple-selection-dialog)
- - [Slider dialog](#slider-dialog)
- - [Colorpicker](#colorpicker)
- - [Datepicker](#datepicker)
- - [File and directory selection dialogs](#file-and-directory-selection-dialogs)
- - [Exception dialog](#exception-dialog)
- - [List dialog](#list-dialog)
- - [Login dialog](#login-dialog)
- - [Waiting dialog](#waiting-dialog)
- - [Progress dialog](#progress-dialog)
- - [Table dialog](#table-dialog)
- - [Gallery dialog](#gallery-dialog)
- - [Form dialog](#form-dialog)
- - [Splash screen](#splash-screen)
- - [System tray menu](#system-tray)
- - [Notification](#notification)
+- [Information dialogs](#information-dialogs)
+- [Text input dialog](#text-input-dialog)
+- [Confirmation dialog](#confirmation-dialog)
+- [Password input dialog](#password-input-dialog)
+- [Selection dialog](#selection-dialog)
+- [Multiple selection dialog](#multiple-selection-dialog)
+- [Slider dialog](#slider-dialog)
+- [Colorpicker](#colorpicker)
+- [Datepicker](#datepicker)
+- [File and directory selection dialogs](#file-and-directory-selection-dialogs)
+- [Exception dialog](#exception-dialog)
+- [List dialog](#list-dialog)
+- [Login dialog](#login-dialog)
+- [Waiting dialog](#waiting-dialog)
+- [Progress dialog](#progress-dialog)
+- [Table dialog](#table-dialog)
+- [Gallery dialog](#gallery-dialog)
+- [Form dialog](#form-dialog)
+- [Splash screen](#splash-screen)
+- [System tray menu](#system-tray)
+- [Notification](#notification)
 
 ### Information dialogs
 ![screenshot info dialog](https://github.com/Milchreis/UiBooster/blob/master/screenshots/info.jpg?raw=true)
@@ -74,10 +89,10 @@ String opinion = new UiBooster().showTextInputDialog("What do you think?");
 ![screenshot confirm dialog](https://github.com/Milchreis/UiBooster/blob/master/screenshots/confirm.jpg?raw=true)
 ```java
 new UiBooster().showConfirmDialog(
-                "Do you really want this action?",
-                "Are you sure?",
-                () -> System.out.println("Action accepted"),
-                () -> System.out.println("Action declined"));
+        "Do you really want this action?",
+        "Are you sure?",
+        () -> System.out.println("Action accepted"),
+        () -> System.out.println("Action declined"));
 ```
 
 ### Password input dialog
@@ -99,17 +114,17 @@ String selection = new UiBooster().showSelectionDialog(
 ![screenshot multiple selection dialog](https://github.com/Milchreis/UiBooster/blob/master/screenshots/multiselection.jpg?raw=true)
 ```java
  List<String> selectedElement = new UiBooster().showMultipleSelection(
-            "What are your favorite hobbies?",
-            "Your hobbies",
-            "Reading", "Traveling", "Fishing", "Music", "Gardening", "Sport", "Television",
-            "Video Games", "Crafting", "Bird Watching", "Collecting");
+        "What are your favorite hobbies?",
+        "Your hobbies",
+        "Reading", "Traveling", "Fishing", "Music", "Gardening", "Sport", "Television",
+        "Video Games", "Crafting", "Bird Watching", "Collecting");
 ```
 
 ### Slider dialog
 ![screenshot slider dialog](https://github.com/Milchreis/UiBooster/blob/master/screenshots/slider.jpg?raw=true)
 ```java
-Integer numberOfHotDogs = new UiBooster().showSlider("How many HotDogs do you want?", "Your order", 
-                0, 10, 2, 5, 1);
+Integer numberOfHotDogs = new UiBooster().showSlider("How many HotDogs do you want?", "Your order",
+        0, 10, 2, 5, 1);
 ```
 
 ### Colorpicker
@@ -128,33 +143,33 @@ Date birthday = new UiBooster().showDatePicker("What's your birthday?", "Birthda
 ![screenshot file dialog](https://github.com/Milchreis/UiBooster/blob/master/screenshots/fileselection.jpg?raw=true)
 ```java
 UiBooster booster = new UiBooster();
-File file = booster.showFileSelection();
-File directory = booster.showDirectorySelection();
-File fileOrDirectory = booster.showFileOrDirectorySelection();
+        File file = booster.showFileSelection();
+        File directory = booster.showDirectorySelection();
+        File fileOrDirectory = booster.showFileOrDirectorySelection();
 ```
 
 ### Exception dialog
 ![screenshot exception dialog](https://github.com/Milchreis/UiBooster/blob/master/screenshots/exception.jpg?raw=true)
 ```java
 new UiBooster().showException(
-    "An error occurred", 
-    "Exception message",
-    new Exception("Something went wrong ...")
-);
+        "An error occurred",
+        "Exception message",
+        new Exception("Something went wrong ...")
+        );
 ```
 
 ### List dialog
 ![screenshot list dialog](https://github.com/Milchreis/UiBooster/blob/master/screenshots/list.jpg?raw=true)
 ```java
 ListElement selectedElement = new UiBooster().showList(
-    "Select a robot", 
-    "Avatars from RoboHash.org",
-    element -> System.out.println("Selected: " + element.toString()),
-    new ListElement("Robo 1", "Green and strong",         "src/test/resources/avatar1.png"),
-    new ListElement("Robo 2", "Shy without an avatar!"),
-    new ListElement("Robo 3", "- Crazy\n- Fast\n- Funny", "src/test/resources/avatar2.png"),
-    new ListElement("Robo 4", null,                       "src/test/resources/avatar3.png")
-);
+        "Select a robot",
+        "Avatars from RoboHash.org",
+        element -> System.out.println("Selected: " + element.toString()),
+        new ListElement("Robo 1", "Green and strong",         "src/test/resources/avatar1.png"),
+        new ListElement("Robo 2", "Shy without an avatar!"),
+        new ListElement("Robo 3", "- Crazy\n- Fast\n- Funny", "src/test/resources/avatar2.png"),
+        new ListElement("Robo 4", null,                       "src/test/resources/avatar3.png")
+        );
 ```
 
 ### Login dialog
@@ -173,26 +188,26 @@ LoginCredentials credentials = new UiBooster().showLogin(
 ![screenshot waiting dialog](https://github.com/Milchreis/UiBooster/blob/master/screenshots/waiting.jpg?raw=true)
 ```java
 WaitingDialog dialog = new UiBooster().showWaitingDialog("Starting", "Please wait");
-dialog.setMessage("Ready");
-dialog.close();
+        dialog.setMessage("Ready");
+        dialog.close();
 ```
 ![screenshot waiting with message dialog](https://github.com/Milchreis/UiBooster/blob/master/screenshots/waiting_with_message.jpg?raw=true)
 ```java
 WaitingDialog dialog = new UiBooster().showWaitingDialog("Starting", "Please wait");
-dialog.setMessage("Initializing");
-dialog.setLargeMessage("Some more information...\nMaybe from log files or other resources. \nBe transparent to the user to understand long processes...");
-dialog.close();
+        dialog.setMessage("Initializing");
+        dialog.setLargeMessage("Some more information...\nMaybe from log files or other resources. \nBe transparent to the user to understand long processes...");
+        dialog.close();
 ```
 
 ### Progress dialog
 ![screenshot progress dialog](https://github.com/Milchreis/UiBooster/blob/master/screenshots/progress.jpg?raw=true)
 ```java
 ProgressDialog dialog = new UiBooster().showProgressDialog("Please wait", "Waiting", 0, 120);
-dialog.setProgress(10);
+        dialog.setProgress(10);
 // ...
-dialog.setProgress(120);
-dialog.setMessage("Ready");
-dialog.close();
+        dialog.setProgress(120);
+        dialog.setMessage("Ready");
+        dialog.close();
 ```
 
 ### Table dialog
@@ -200,9 +215,9 @@ dialog.close();
 ```java
 String[][] modifiedData = new UiBooster().showTable(    // showTableImmutable for immutable tables
         new String[][]{
-                {"Jimmy Johnson", "35", "Zombieland"},
-                {"Danny Durango", "23", "Hangover"},
-                {"Larry Berry", "54", ""}
+        {"Jimmy Johnson", "35", "Zombieland"},
+        {"Danny Durango", "23", "Hangover"},
+        {"Larry Berry", "54", ""}
         },
         Arrays.asList("Name", "Age", "Favorite movie"),
         "Favorite movies");
@@ -214,17 +229,17 @@ String[][] modifiedData = new UiBooster().showTable(    // showTableImmutable fo
 new UiBooster().showPictures(
         "My picture",
         Arrays.asList(
-            new File("/home/nick/pictures/img-01.jpg"),
-            new File("/home/nick/pictures/img-02.jpg")
+        new File("/home/nick/pictures/img-01.jpg"),
+        new File("/home/nick/pictures/img-02.jpg")
         )
-);
+        );
 ```
 
 ### Form dialog
 ![screenshot gallery dialog](https://github.com/Milchreis/UiBooster/blob/master/screenshots/form.jpg?raw=true)
 ```java
 UiBooster booster = new UiBooster();
-FilledForm form = booster.createForm("Personal information")
+Form form = booster.createForm("Personal information")
             .addText("Whats your first name?")
             .addTextArea("Tell me something about you")
             .addSelection(
@@ -236,9 +251,13 @@ FilledForm form = booster.createForm("Personal information")
             .addSlider("How many liters did you drink today?", 0, 5, 1, 5, 1)
             .show();
 
-// use .run() instead of show() to open the form without blocking.
+// use .run() instead of show() to open the formBuilder without blocking.
 ```
-You can also add your own elements: [Look here](https://github.com/Milchreis/UiBooster/blob/master/src/test/java/de/milchreis/uibooster/CustomFormElementTest.java)
+The form is very powerful and provides a lot of features:
+* add your own elements ([Example](https://github.com/Milchreis/UiBooster/blob/master/src/test/java/de/milchreis/uibooster/CustomFormBuilderElementTest.java))
+* put multiple elements in one row ([Example](https://github.com/Milchreis/UiBooster/blob/master/src/test/java/de/milchreis/uibooster/FormBuilderWithRowsTest.java#L41))
+* add a listener for any changes ([Example](https://github.com/Milchreis/UiBooster/blob/master/src/test/java/de/milchreis/uibooster/FormBuilderChangeListenerTest.java#L22))
+* set window setting, f.e. size and position ([Example](https://github.com/Milchreis/UiBooster/blob/master/src/test/java/de/milchreis/uibooster/FormBuilderTest.java#L116))
 
 ### Splash screen
 ![screenshot splash screen](https://github.com/Milchreis/UiBooster/blob/master/screenshots/splash.jpg?raw=true)
@@ -268,12 +287,11 @@ new UiBooster().createNotification("It's hot and delicious", "Dinner is ready");
 ## Options
 ```java
 UiBooster booster = new UiBooster(
-    new UiBoosterOptions(
-        UiBoosterOptions.Theme.DARK_THEME,
-        "/path/to/your/custom-window-icon.png"
-    )
+    UiBoosterOptions.Theme.DARK_THEME,
+    "/path/to/your/custom-window-icon.png"
 );
 ```
+See some examples for UiBoosterOptions [here](https://github.com/Milchreis/UiBooster/blob/master/src/test/java/de/milchreis/uibooster/UiBoosterOptionsTest.java)
 
 ## Contribution
 Please report issues for bugs or feature requests with ideas for other useful dialogs. If you interested in the development

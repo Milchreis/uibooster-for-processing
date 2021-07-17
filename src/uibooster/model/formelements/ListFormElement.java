@@ -5,6 +5,8 @@ import uibooster.model.FormElementChangeListener;
 import uibooster.model.ListElement;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static uibooster.components.ListDialog.createList;
@@ -24,7 +26,7 @@ public class ListFormElement extends FormElement {
     public JComponent createComponent(FormElementChangeListener changeListener) {
         list = createList(element -> {
             if (changeListener != null)
-                changeListener.onChange(ListFormElement.this, getValue());
+                changeListener.onChange(ListFormElement.this, getValue(), form);
         }, elements);
 
         return new JScrollPane(
@@ -55,5 +57,17 @@ public class ListFormElement extends FormElement {
 
         } else
             throw new IllegalArgumentException("The given value has to be of type 'ListElement[]' or 'List<ListElement>'");
+    }
+
+    public void addElement(ListElement element) {
+        ArrayList<ListElement> arrayList = new ArrayList<>(Arrays.asList(elements));
+        arrayList.add(element);
+        elements = arrayList.toArray(elements);
+        list.setModel(createListModel(elements));
+    }
+
+    public void clearAll() {
+        elements = new ListElement[]{};
+        list.setModel(createListModel(elements));
     }
 }

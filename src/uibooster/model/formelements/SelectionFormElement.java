@@ -4,11 +4,12 @@ import uibooster.model.FormElement;
 import uibooster.model.FormElementChangeListener;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SelectionFormElement extends FormElement {
 
-    private final List<String> possibilities;
+    private List<String> possibilities;
     private JComboBox<String> box;
 
     public SelectionFormElement(String label, List<String> possibilities) {
@@ -21,7 +22,7 @@ public class SelectionFormElement extends FormElement {
         box = new JComboBox<>((possibilities).toArray(new String[]{}));
 
         if (changeListener != null) {
-            box.addActionListener(e -> changeListener.onChange(SelectionFormElement.this, getValue()));
+            box.addActionListener(e -> changeListener.onChange(SelectionFormElement.this, getValue(), form));
         }
 
         return box;
@@ -43,9 +44,15 @@ public class SelectionFormElement extends FormElement {
         if (!(value instanceof String))
             throw new IllegalArgumentException("The given value has to be of type 'Date'");
 
-        if (possibilities.contains(value.toString()))
+        if (!possibilities.contains(value.toString()))
             throw new IllegalArgumentException("The given value has to be an element of the supported possibilities list");
 
         box.setSelectedItem(value.toString());
+    }
+
+    public void addSelection(String element) {
+        possibilities = new ArrayList<>(possibilities);
+        possibilities.add(element);
+        box.addItem(element);
     }
 }

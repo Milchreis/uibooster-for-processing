@@ -1,5 +1,9 @@
 package uibooster.model;
 
+import uibooster.model.formelements.ListFormElement;
+import uibooster.model.formelements.SelectionFormElement;
+import uibooster.model.formelements.TableFormElement;
+
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
@@ -10,6 +14,7 @@ public abstract class FormElement {
     protected String id;
     protected String label;
     protected int formIndex;
+    protected Form form;
 
     public FormElement(String label) {
         this.label = label;
@@ -71,4 +76,25 @@ public abstract class FormElement {
         Color color = (Color) getValue();
         return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
     }
+
+    void setForm(Form filledForm) {
+        this.form = filledForm;
+    }
+
+    public TableFormElement toTable() {
+        return (TableFormElement) this;
+    }
+
+    public ListFormElement toList() {
+        return (ListFormElement) this;
+    }
+
+    public RowFormElement toRow() {
+        return (RowFormElement) this;
+    }
+
+    public SelectionFormElement toSelection() {
+        return (SelectionFormElement) this;
+    }
+
 }

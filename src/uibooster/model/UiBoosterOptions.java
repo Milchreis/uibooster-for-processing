@@ -1,35 +1,38 @@
 package uibooster.model;
 
-public class UiBoosterOptions {
+import javax.swing.plaf.basic.BasicLookAndFeel;
+
+/**
+ * Abstract base class for user defined look and feel of the application.
+ */
+public abstract class UiBoosterOptions {
 
     public enum Theme {
         DARK_THEME, SWING, OS_NATIVE, DEFAULT;
     }
 
-    private Theme theme = Theme.DARK_THEME;
-    private String iconPath = "/data/uibooster-default-icon.png";
+    public static final String defaultIconPath = "/data/uibooster-default-icon.png";
+    public static final String defaultLoadingImage = "/data/loading-75.gif";
 
-    public UiBoosterOptions() {
+    protected final BasicLookAndFeel lookAndFeel;
+    protected final String iconPath;
+    protected final String loadingImage;
+
+    public UiBoosterOptions(BasicLookAndFeel lookAndFeel, String iconPath, String loadingImage) {
+        this.lookAndFeel = lookAndFeel;
+        this.iconPath = iconPath == null ? defaultIconPath : iconPath;
+        this.loadingImage = loadingImage;
     }
 
-    public UiBoosterOptions(String iconPath) {
-        this.iconPath = iconPath;
-    }
-
-    public UiBoosterOptions(Theme theme) {
-        this.theme = theme;
-    }
-
-    public UiBoosterOptions(Theme theme, String iconPath) {
-        this.theme = theme;
-        this.iconPath = iconPath;
+    public BasicLookAndFeel getLookAndFeel() {
+        return lookAndFeel;
     }
 
     public String getIconPath() {
         return iconPath;
     }
 
-    public Theme getTheme() {
-        return theme;
+    public String getLoadingImage() {
+        return loadingImage;
     }
 }
