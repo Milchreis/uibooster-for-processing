@@ -31,7 +31,7 @@ void setup() {
     .addColorPicker("Which color?")
     .setChangeListener(new FormElementChangeListener() {
 
-      public void onChange(FormElement element, Object value) {
+      public void onChange(FormElement element, Object value, Form form) {
         if(element.getIndex() == 0) {
           name = element.asString();
           println("Your name changed to " + name);

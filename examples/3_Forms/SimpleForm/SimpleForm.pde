@@ -6,7 +6,7 @@
 import uibooster.*;
 import uibooster.model.*;
 
-FilledForm form;
+Form form;
 
 void setup() {
   size(800, 400); 
