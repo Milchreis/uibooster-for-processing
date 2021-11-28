@@ -22,5 +22,8 @@ void setup() {
 void draw() {
     textAlign(CENTER, CENTER);
     textSize(32);
-    text(password, width/2, height/2);
+    if(password != null)
+        text(password, width/2, height/2);
+     else
+        text("cancel clicked", width/2, height/2);
 }

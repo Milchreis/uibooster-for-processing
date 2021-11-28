@@ -3,8 +3,10 @@ package uibooster;
 import uibooster.components.*;
 import uibooster.model.*;
 import uibooster.model.options.DarkUiBoosterOptions;
+import uibooster.model.options.LightUiBoosterOptions;
 import uibooster.model.options.OSNativeUiBoosterOptions;
 import uibooster.model.options.SwingUiBoosterOptions;
+import uibooster.utils.FontHelper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,17 +35,24 @@ public class UiBooster {
         this.options = options;
         try {
             UIManager.setLookAndFeel(options.getLookAndFeel());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public UiBooster(UiBoosterOptions.Theme options) {
-        this(options, null);
+        this(options, null, null);
+    }
+
+    public UiBooster(Font font) {
+        this(UiBoosterOptions.Theme.DEFAULT, null, font);
     }
 
     public UiBooster(UiBoosterOptions.Theme options, String iconPath) {
+        this(options, iconPath, null);
+    }
+
+    public UiBooster(UiBoosterOptions.Theme options, String iconPath, Font font) {
         switch (options) {
             case SWING:
                 this.options = new SwingUiBoosterOptions(iconPath);
@@ -51,13 +60,18 @@ public class UiBooster {
             case OS_NATIVE:
                 this.options = new OSNativeUiBoosterOptions(iconPath);
                 break;
+            case LIGHT_THEME:
+                this.options = new LightUiBoosterOptions(iconPath);
+                break;
             case DARK_THEME:
             default:
                 this.options = new DarkUiBoosterOptions(iconPath);
                 break;
         }
         try {
+            FontHelper.setFontInUIManager(font);
             UIManager.setLookAndFeel(this.options.getLookAndFeel());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
