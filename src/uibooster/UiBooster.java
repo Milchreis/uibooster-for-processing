@@ -1,10 +1,11 @@
 package uibooster;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import uibooster.components.*;
 import uibooster.model.*;
 import uibooster.model.options.*;
 import uibooster.utils.FontHelper;
+import uibooster.utils.JOptionPaneHelper;
+import uibooster.utils.WindowIconHelper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -84,7 +85,17 @@ public class UiBooster {
      */
     public void showInfoDialog(String infoMessage) {
         nonNull(infoMessage);
-        JOptionPane.showMessageDialog(null, infoMessage);
+
+        JOptionPane jp = new JOptionPane(
+                infoMessage,
+                JOptionPane.INFORMATION_MESSAGE,
+                JOptionPane.DEFAULT_OPTION,
+                null
+        );
+        JDialog dialog = jp.createDialog(null, infoMessage);
+        ((Frame) dialog.getParent()).setIconImage(WindowIconHelper.getIcon(options.getIconPath()).getImage());
+        dialog.setIconImage(WindowIconHelper.getIcon(options.getIconPath()).getImage());
+        dialog.setVisible(true);
     }
 
     /**
@@ -97,7 +108,17 @@ public class UiBooster {
     public void showWarningDialog(String warningMessage, String title) {
         nonNull(warningMessage);
         nonNull(title);
-        JOptionPane.showMessageDialog(null, warningMessage, title, JOptionPane.WARNING_MESSAGE);
+
+        JOptionPane jp = new JOptionPane(
+                warningMessage,
+                JOptionPane.WARNING_MESSAGE,
+                JOptionPane.DEFAULT_OPTION,
+                null
+        );
+        JDialog dialog = jp.createDialog(null, title);
+        ((Frame) dialog.getParent()).setIconImage(WindowIconHelper.getIcon(options.getIconPath()).getImage());
+        dialog.setIconImage(WindowIconHelper.getIcon(options.getIconPath()).getImage());
+        dialog.setVisible(true);
     }
 
     /**
@@ -110,7 +131,17 @@ public class UiBooster {
     public void showErrorDialog(String errorMessage, String title) {
         nonNull(errorMessage);
         nonNull(title);
-        JOptionPane.showMessageDialog(null, errorMessage, title, JOptionPane.ERROR_MESSAGE);
+
+        JOptionPane jp = new JOptionPane(
+                errorMessage,
+                JOptionPane.ERROR_MESSAGE,
+                JOptionPane.DEFAULT_OPTION,
+                null
+        );
+        JDialog dialog = jp.createDialog(null, title);
+        ((Frame) dialog.getParent()).setIconImage(WindowIconHelper.getIcon(options.getIconPath()).getImage());
+        dialog.setIconImage(WindowIconHelper.getIcon(options.getIconPath()).getImage());
+        dialog.setVisible(true);
     }
 
     /**
@@ -120,8 +151,7 @@ public class UiBooster {
      * @return the user input or null on cancel
      */
     public String showTextInputDialog(String message) {
-        nonNull(message);
-        return JOptionPane.showInputDialog(null, message);
+        return JOptionPaneHelper.showInputDialog(message, options);
     }
 
     /**
@@ -148,17 +178,27 @@ public class UiBooster {
      */
     public void showConfirmDialog(String message, String title, Runnable onConfirm, Runnable onDecline) {
         nonNull(message);
-        nonNull(title);
-        int n = JOptionPane.showConfirmDialog(null,
-                message,
-                title,
-                JOptionPane.YES_NO_OPTION);
+        int n = JOptionPaneHelper.showConfirmDialog(message, title, options);
 
         if (n == 0 && onConfirm != null)
             onConfirm.run();
 
         if (n == 1 && onDecline != null)
             onDecline.run();
+    }
+
+    /**
+     * Shows a confirm dialog and blocks until a decision is selected.
+     * '\n' is allowed as newline character for the message.
+     *
+     * @param message expects the message
+     * @param title   expects the window title
+     * @return true if the dialog was confirmed by user, otherwise false
+     */
+    public boolean showConfirmDialog(String message, String title) {
+        nonNull(message);
+        int n = JOptionPaneHelper.showConfirmDialog(message, title, options);
+        return n == 0;
     }
 
     /**
@@ -185,18 +225,7 @@ public class UiBooster {
      */
     public String showSelectionDialog(String message, String title, String... possibilities) {
         nonNull(message);
-        nonNull(title);
-
-        String selection = (String) JOptionPane.showInputDialog(
-                null,
-                message,
-                title,
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                possibilities,
-                possibilities[0]);
-
-        return selection;
+        return JOptionPaneHelper.showSelectionDialog(message, title, options, possibilities);
     }
 
     /**
@@ -208,6 +237,18 @@ public class UiBooster {
      */
     public Color showColorPicker(String message, String title) {
         return ColorPickerDialog.showColorPicker(message, title, options.getIconPath());
+    }
+
+    /**
+     * Shows a simple color picker to select an RGB value with an initial color value
+     *
+     * @param message      optional message above the color picker
+     * @param title        expects a window title
+     * @param initialColor optional color value which should be already selected on start
+     * @return the selected color, on close it returns null.
+     */
+    public Color showColorPicker(String message, String title, Color initialColor) {
+        return ColorPickerDialog.showColorPicker(message, title, initialColor, options.getIconPath());
     }
 
     /**
@@ -223,12 +264,49 @@ public class UiBooster {
     }
 
     /**
+     * Shows a simple color picker to select an RGB value with an initial color value.
+     *
+     * @param message      optional message above the color picker
+     * @param title        expects a window title
+     * @param initialColor optional color value which should be already selected on start
+     * @return the selected color as int value, on close it returns null.
+     */
+    public Integer showColorPickerAndGetRGB(String message, String title, Color initialColor) {
+        Color color = showColorPicker(message, title, initialColor);
+        return color != null ? color.getRGB() : null;
+    }
+
+    /**
+     * Shows a simple font chooser to select an installed font.
+     *
+     * @param message optional message above the font chooser
+     * @param title   expects a window title
+     * @return the selected font, on close it returns null.
+     */
+    public Font showFontChooser(String message, String title) {
+        return FontChooserDialog.showFontChooser(message, title, options.getIconPath());
+    }
+
+    /**
+     * Shows a simple font chooser to select a font with an initial font value
+     *
+     * @param message      optional message above the font chooser
+     * @param title        expects a window title
+     * @param initialFont  optional font which should be already selected on start
+     * @return the selected font, on close it returns null.
+     */
+    public Font showFontChooser(String message, String title, Font initialFont) {
+        return FontChooserDialog.showFontChooser(message, title, initialFont, options.getIconPath());
+    }
+
+
+    /**
      * Shows a file selection dialog. Only files are shown and selectable
      *
      * @return returns the selection file or null on cancel
      */
     public File showFileSelection() {
-        return FilesystemDialog.showFileSelectionDialog();
+        return FilesystemDialog.showFileSelectionDialog(options);
     }
 
     /**
@@ -238,7 +316,7 @@ public class UiBooster {
      * @return returns the selection file or null on cancel
      */
     public File showFileSelectionFromPath(String currentDirectoryPath) {
-        return FilesystemDialog.showFileSelectionDialog(currentDirectoryPath);
+        return FilesystemDialog.showFileSelectionDialog(currentDirectoryPath, options);
     }
 
     /**
@@ -249,7 +327,7 @@ public class UiBooster {
      * @return returns the selection file or null on cancel
      */
     public File showFileSelection(String description, String... extensions) {
-        return FilesystemDialog.showFileSelectionDialog(null, description, extensions);
+        return FilesystemDialog.showFileSelectionDialog(null, description, options, extensions);
     }
 
     /**
@@ -261,7 +339,7 @@ public class UiBooster {
      * @return returns the selection file or null on cancel
      */
     public File showFileSelectionFromPath(String currentDirectoryPath, String description, String... extensions) {
-        return FilesystemDialog.showFileSelectionDialog(currentDirectoryPath, description, extensions);
+        return FilesystemDialog.showFileSelectionDialog(currentDirectoryPath, description, options, extensions);
     }
 
     /**
@@ -270,7 +348,7 @@ public class UiBooster {
      * @return returns the selection directory or null on cancel
      */
     public File showDirectorySelection() {
-        return FilesystemDialog.showDirectorySelectionDialog();
+        return FilesystemDialog.showDirectorySelectionDialog(options);
     }
 
     /**
@@ -280,7 +358,7 @@ public class UiBooster {
      * @return returns the selection directory or null on cancel
      */
     public File showDirectorySelectionFromPath(String currentDirectoryPath) {
-        return FilesystemDialog.showDirectorySelectionDialog(currentDirectoryPath);
+        return FilesystemDialog.showDirectorySelectionDialog(currentDirectoryPath, options);
     }
 
     /**
@@ -289,7 +367,7 @@ public class UiBooster {
      * @return returns the selection or null on cancel
      */
     public File showFileOrDirectorySelection() {
-        return FilesystemDialog.showFileOrDirectorySelectionDialog();
+        return FilesystemDialog.showFileOrDirectorySelectionDialog(options);
     }
 
     /**
@@ -299,7 +377,7 @@ public class UiBooster {
      * @return returns the selection or null on cancel
      */
     public File showFileOrDirectorySelectionFromPath(String currentDirectoryPath) {
-        return FilesystemDialog.showFileOrDirectorySelectionDialog(currentDirectoryPath);
+        return FilesystemDialog.showFileOrDirectorySelectionDialog(currentDirectoryPath, options);
     }
 
     /**
@@ -310,7 +388,7 @@ public class UiBooster {
      * @return returns the selection or null on cancel
      */
     public File showFileOrDirectorySelection(String description, String... extensions) {
-        return FilesystemDialog.showFileOrDirectorySelectionDialog(null, description, extensions);
+        return FilesystemDialog.showFileOrDirectorySelectionDialog(null, description, options, extensions);
     }
 
     /**
@@ -322,7 +400,7 @@ public class UiBooster {
      * @return returns the selection or null on cancel
      */
     public File showFileOrDirectorySelectionFromPath(String currentDirectoryPath, String description, String... extensions) {
-        return FilesystemDialog.showFileOrDirectorySelectionDialog(currentDirectoryPath, description, extensions);
+        return FilesystemDialog.showFileOrDirectorySelectionDialog(currentDirectoryPath, description, options, extensions);
     }
 
     /**

@@ -4,7 +4,7 @@
 
 > UiBooster is a lean library to create fast and easy dialogs for utility tools.
 
-This project ports [UiBooster 1.14.3](https://github.com/Milchreis/UiBooster/) full functionally to the Processing eco-system 
+This project ports [UiBooster 1.15.2](https://github.com/Milchreis/UiBooster/) full functionally to the Processing eco-system 
 as a library to create dialogs for your sketch fast as possible.
 With a lot of examples you will learn to use this library in less than five minutes.
 
@@ -52,6 +52,7 @@ The following examples show the usage of this library. If you interested in the 
 - [Multiple selection dialog](#multiple-selection-dialog)
 - [Slider dialog](#slider-dialog)
 - [Colorpicker](#colorpicker)
+- [FontChooser](#font-chooser)
 - [Datepicker](#datepicker)
 - [File and directory selection dialogs](#file-and-directory-selection-dialogs)
 - [Exception dialog](#exception-dialog)
@@ -133,6 +134,14 @@ Integer numberOfHotDogs = new UiBooster().showSlider("How many HotDogs do you wa
 ```java
 Color selectedColor = new UiBooster().showColorPicker("Choose your favorite color", "Color picking");
 ```    
+_library by @dheid: [colorpicker](https://github.com/dheid/colorpicker)_
+
+### Font Chooser
+![screenshot font dialog](https://github.com/Milchreis/UiBooster/blob/master/screenshots/font.png?raw=true)
+```java
+Font selectedFont = new UiBooster().showFontChooser("Choose your favorite font", "Font choosing");
+```    
+_library by @dheid: [fontchooser](https://github.com/dheid/fontchooser)_
 
 ### Datepicker
 ![screenshot datepicker](https://github.com/Milchreis/UiBooster/blob/master/screenshots/dateselection.jpg?raw=true)
