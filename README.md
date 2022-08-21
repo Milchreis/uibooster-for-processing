@@ -33,6 +33,7 @@ A big thanks goes to the supporters of this project. I thank every single one of
  * Devraj Joshi ([Twitter](https://twitter.com/DevrajJoshi))
  * Ralf Leggett ([Github](https://github.com/ralfleggett))
  * PlayStateWolff ([Github](https://github.com/PlayStateWolff)) 
+ * leuwenn ([Github](https://github.com/leuwenn))
 
 ## Installation
 If you want to use this library in your processing sketch you can download it via the integrated `Contribution Manager`. 
