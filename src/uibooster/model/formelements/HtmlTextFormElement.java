@@ -4,27 +4,24 @@ import uibooster.model.FormElement;
 import uibooster.model.FormElementChangeListener;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class TextFormElement extends FormElement<String> {
+public class HtmlTextFormElement extends FormElement<String> {
 
-    private final JTextField textfield;
+    private final JEditorPane area;
 
-    public TextFormElement(String label, String initialText, boolean readonly) {
+    public HtmlTextFormElement(String label, String htmlContent, int width, int height) {
         super(label);
-        textfield = new JTextField(initialText);
-        textfield.setEditable(!readonly);
-
-        if (initialText != null) {
-            textfield.setCaretPosition(initialText.length());
-        }
+        area = new JEditorPane("text/html", htmlContent);
+        area.setPreferredSize(new Dimension(width, height));
     }
 
     @Override
     public JComponent createComponent(FormElementChangeListener changeListener) {
 
-        textfield.addKeyListener(new KeyAdapter() {
+        area.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 super.keyReleased(e);
@@ -33,26 +30,24 @@ public class TextFormElement extends FormElement<String> {
                     binding.set(getValue());
 
                 if (changeListener != null)
-                    changeListener.onChange(TextFormElement.this, getValue(), form);
+                    changeListener.onChange(HtmlTextFormElement.this, getValue(), form);
             }
         });
-
-
-        return textfield;
+        return new JScrollPane(area);
     }
 
     @Override
     public void setEnabled(boolean enable) {
-        textfield.setEnabled(enable);
+        area.setEnabled(enable);
     }
 
     @Override
     public String getValue() {
-        return textfield.getText();
+        return area.getText();
     }
 
     @Override
     public void setValue(String value) {
-        textfield.setText(value);
+        area.setText(value.toString());
     }
 }

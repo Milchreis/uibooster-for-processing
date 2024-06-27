@@ -87,14 +87,15 @@ public class UiBooster {
         nonNull(infoMessage);
 
         JOptionPane jp = new JOptionPane(
-                infoMessage,
-                JOptionPane.INFORMATION_MESSAGE,
-                JOptionPane.DEFAULT_OPTION,
-                null
+            infoMessage,
+            JOptionPane.INFORMATION_MESSAGE,
+            JOptionPane.DEFAULT_OPTION,
+            null
         );
         JDialog dialog = jp.createDialog(null, infoMessage);
         ((Frame) dialog.getParent()).setIconImage(WindowIconHelper.getIcon(options.getIconPath()).getImage());
         dialog.setIconImage(WindowIconHelper.getIcon(options.getIconPath()).getImage());
+        dialog.setAlwaysOnTop(true);
         dialog.setVisible(true);
     }
 
@@ -110,14 +111,15 @@ public class UiBooster {
         nonNull(title);
 
         JOptionPane jp = new JOptionPane(
-                warningMessage,
-                JOptionPane.WARNING_MESSAGE,
-                JOptionPane.DEFAULT_OPTION,
-                null
+            warningMessage,
+            JOptionPane.WARNING_MESSAGE,
+            JOptionPane.DEFAULT_OPTION,
+            null
         );
         JDialog dialog = jp.createDialog(null, title);
         ((Frame) dialog.getParent()).setIconImage(WindowIconHelper.getIcon(options.getIconPath()).getImage());
         dialog.setIconImage(WindowIconHelper.getIcon(options.getIconPath()).getImage());
+        dialog.setAlwaysOnTop(true);
         dialog.setVisible(true);
     }
 
@@ -133,14 +135,15 @@ public class UiBooster {
         nonNull(title);
 
         JOptionPane jp = new JOptionPane(
-                errorMessage,
-                JOptionPane.ERROR_MESSAGE,
-                JOptionPane.DEFAULT_OPTION,
-                null
+            errorMessage,
+            JOptionPane.ERROR_MESSAGE,
+            JOptionPane.DEFAULT_OPTION,
+            null
         );
         JDialog dialog = jp.createDialog(null, title);
         ((Frame) dialog.getParent()).setIconImage(WindowIconHelper.getIcon(options.getIconPath()).getImage());
         dialog.setIconImage(WindowIconHelper.getIcon(options.getIconPath()).getImage());
+        dialog.setAlwaysOnTop(true);
         dialog.setVisible(true);
     }
 
@@ -290,9 +293,9 @@ public class UiBooster {
     /**
      * Shows a simple font chooser to select a font with an initial font value
      *
-     * @param message      optional message above the font chooser
-     * @param title        expects a window title
-     * @param initialFont  optional font which should be already selected on start
+     * @param message     optional message above the font chooser
+     * @param title       expects a window title
+     * @param initialFont optional font which should be already selected on start
      * @return the selected font, on close it returns null.
      */
     public Font showFontChooser(String message, String title, Font initialFont) {
@@ -411,13 +414,13 @@ public class UiBooster {
     public LoginCredentials showLogin(String message, String title, String usernameLabel, String passwordLabel,
                                       String loginButtonLabel, String cancelButtonLabel) {
         return new LoginDialog(
-                title,
-                message,
-                usernameLabel,
-                passwordLabel,
-                loginButtonLabel,
-                cancelButtonLabel,
-                options.getIconPath()).showDialog();
+            title,
+            message,
+            usernameLabel,
+            passwordLabel,
+            loginButtonLabel,
+            cancelButtonLabel,
+            options.getIconPath()).showDialog();
     }
 
     /**
@@ -720,13 +723,67 @@ public class UiBooster {
      * Shows an exception stack trace in a dialog
      * The dialogs blocks the process until it's closed.
      *
-     * @param message   expects a message for the meaning of this selection
+     * @param message   expects a message for the meaning exception
      * @param title     expects a title for the window
      * @param exception excepts an exception to show the stacktrace
      */
     public void showException(String message, String title, Exception exception) {
         ExceptionDialog.showDialog(message, title, options, exception);
     }
+
+    /**
+     * Shows a scrollable and editable text area with 30 rows and 80 columns in a dialog.
+     * The dialogs blocks the process until it's closed.
+     *
+     * @param message expects a message for the meaning of this text
+     * @param title   expects a title for the window
+     * @param content expects the content/text for the text area
+     */
+    public void showTextArea(String message, String title, String content) {
+        showTextArea(message, title, content, 30, 80, true);
+    }
+
+    /**
+     * Shows a scrollable and editable text area with 30 rows and 80 columns in a dialog.
+     * The dialogs blocks the process until it's closed.
+     *
+     * @param message  expects a message for the meaning of this text
+     * @param title    expects a title for the window
+     * @param content  expects the content/text for the text area
+     * @param rows     expects the number of rows for the text area (height)
+     * @param columns  expects the number of columns for the text area (width)
+     * @param editable if true the text area could changed by user, otherwise its immutable
+     */
+    public void showTextArea(String message, String title, String content, int rows, int columns, boolean editable) {
+        TextAreaDialog.showDialog(message, title, content, rows, columns, editable, options);
+    }
+
+    /**
+     * Shows a scrollable text area which allows HTML 3.2 in a dialog.
+     * The dialogs blocks the process until it's closed.
+     *
+     * @param message     expects a message for the meaning of this text
+     * @param title       expects a title for the window
+     * @param htmlContent expects the content/text for the text area
+     */
+    public void showHtmlText(String message, String title, String htmlContent) {
+        HtmlRenderDialog.showDialog(message, title, htmlContent, 600, 600, options);
+    }
+
+    /**
+     * Shows a scrollable text area which allows HTML 3.2 in a dialog.
+     * The dialogs blocks the process until it's closed.
+     *
+     * @param message     expects a message for the meaning of this text
+     * @param title       expects a title for the window
+     * @param htmlContent expects the content/text for the text area
+     * @param width       expects the width in pixel which the component has to used preferred
+     * @param height      expects the height in pixel which the component has to used preferred
+     */
+    public void showHtmlText(String message, String title, String htmlContent, int width, int height) {
+        HtmlRenderDialog.showDialog(message, title, htmlContent, width, height, options);
+    }
+
 
     /**
      * Shows a fiterable list with multiple selectable elements in a dialog.

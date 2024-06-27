@@ -11,19 +11,16 @@ import java.util.List;
 
 public class FormPanel {
 
-    public static JPanel createPanel(FormElement formElement, FormElementChangeListener changeListener, int border) {
-        return createPanel(Collections.singletonList(formElement), changeListener, border);
-    }
-
-    public static JPanel createPanel(List<FormElement> formElements, FormElementChangeListener changeListener, int border) {
+    public static JPanel createPanel(List<FormElement> formElements, FormElementChangeListener changeListener, int panelBorder) {
         JPanel panel = new JPanel();
-        panel.setBorder(new EmptyBorder(border, border, border, border));
+        panel.setBorder(new EmptyBorder(panelBorder, panelBorder, panelBorder, panelBorder));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         for (FormElement formElement : formElements) {
 
             JPanel elementPanel = new JPanel(new BorderLayout());
             JComponent component = formElement.createComponent(changeListener);
+            component.setToolTipText(formElement.getTooltip());
 
             if (formElement.getLabel() != null) {
                 JLabel label = new JLabel(formElement.getLabel());
@@ -34,8 +31,16 @@ public class FormPanel {
 
             if (component != null) {
                 elementPanel.add(component, BorderLayout.CENTER);
-                elementPanel.add(new JLabel(" "), BorderLayout.SOUTH);
             }
+
+            if (formElement.hasBinding()) {
+                formElement.setValueFromBinding();
+            }
+
+            elementPanel.setBorder(new EmptyBorder(
+                formElement.getMarginTop(), formElement.getMarginLeft(),
+                formElement.getMarginBottom(), formElement.getMarginRight())
+            );
 
             panel.add(elementPanel);
         }

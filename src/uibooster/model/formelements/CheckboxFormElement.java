@@ -6,7 +6,7 @@ import uibooster.model.FormElementChangeListener;
 import javax.swing.*;
 import java.awt.*;
 
-public class CheckboxFormElement extends FormElement {
+public class CheckboxFormElement extends FormElement<Boolean> {
 
     private final JLabel title;
     private final JCheckBox checkbox;
@@ -16,9 +16,14 @@ public class CheckboxFormElement extends FormElement {
     }
 
     public CheckboxFormElement(String label, String headline) {
+        this(label, headline, false);
+    }
+
+    public CheckboxFormElement(String label, String headline, boolean initialValue) {
         super(headline);
         title = new JLabel(label);
         checkbox = new JCheckBox();
+        checkbox.setSelected(initialValue);
     }
 
     @Override
@@ -28,6 +33,9 @@ public class CheckboxFormElement extends FormElement {
         panel.add(checkbox, BorderLayout.EAST);
 
         checkbox.addActionListener((l) -> {
+            if (hasBinding())
+                binding.set(getValue());
+
             if (onChange != null)
                 onChange.onChange(this, checkbox, form);
         });
@@ -42,16 +50,16 @@ public class CheckboxFormElement extends FormElement {
     }
 
     @Override
-    public Object getValue() {
+    public Boolean getValue() {
         return checkbox.isSelected();
     }
 
     @Override
-    public void setValue(Object value) {
-        if (value instanceof Boolean) {
-            checkbox.setSelected((Boolean) value);
+    public void setValue(Boolean value) {
+        if (value != null) {
+            checkbox.setSelected(value);
         } else {
-            throw new IllegalArgumentException("The value has to be a boolean");
+            throw new IllegalArgumentException("The value is null and can not set");
         }
     }
 

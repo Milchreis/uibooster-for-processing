@@ -41,10 +41,10 @@ A big thanks goes to the supporters of this project. I thank every single one of
 
  * federico-pepe ([GitHub](https://github.com/federico-pepe))
  * Devraj Joshi ([Twitter](https://twitter.com/DevrajJoshi))
- * Ralf Leggett ([Github](https://github.com/ralfleggett))
- * PlayStateWolff ([Github](https://github.com/PlayStateWolff)) 
+ * Ralf Leggett ([GitHub](https://github.com/ralfleggett))
+ * PlayStateWolff ([GitHub](https://github.com/PlayStateWolff)) 
  * leuwenn ([Github](https://github.com/leuwenn))
- * Nicholas Veronico ([Github](https://github.com/nicholasveronico))
+ * Nicholas Veronico ([GitHub](https://github.com/nicholasveronico))
 
 ## Installation
 If you want to use this library in your processing sketch you can download it via the integrated `Contribution Manager`. 

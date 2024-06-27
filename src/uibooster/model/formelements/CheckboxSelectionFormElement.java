@@ -8,16 +8,20 @@ import javax.swing.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CheckboxSelectionFormElement extends FormElement {
+public class CheckboxSelectionFormElement extends FormElement<List<String>> {
 
     private final List<JCheckBox> checkboxes;
 
-    public CheckboxSelectionFormElement(String label, List<String> options) {
+    public CheckboxSelectionFormElement(String label, List<String> options, List<String> initialSelectedOptions) {
         super(label);
 
         checkboxes = options.stream()
-                .map(JCheckBox::new)
-                .collect(Collectors.toList());
+            .map(JCheckBox::new)
+            .collect(Collectors.toList());
+
+        if (initialSelectedOptions != null && !initialSelectedOptions.isEmpty())
+            checkboxes.stream().filter(c -> initialSelectedOptions.contains(c.getText())).forEach(c -> c.setSelected(true));
+
     }
 
     @Override
@@ -29,6 +33,9 @@ public class CheckboxSelectionFormElement extends FormElement {
             panel.add(checkbox);
 
             checkbox.addActionListener((l) -> {
+                if (hasBinding())
+                    binding.set(getValue());
+
                 if (onChange != null)
                     onChange.onChange(this, checkbox, form);
             });
@@ -43,24 +50,24 @@ public class CheckboxSelectionFormElement extends FormElement {
     }
 
     @Override
-    public Object getValue() {
+    public List<String> getValue() {
         return checkboxes.stream()
-                .filter(AbstractButton::isSelected)
-                .map(AbstractButton::getText)
-                .collect(Collectors.toList());
+            .filter(AbstractButton::isSelected)
+            .map(AbstractButton::getText)
+            .collect(Collectors.toList());
     }
 
     @Override
-    public void setValue(Object value) {
-        if (value instanceof List) {
-            List<String> valuesToSet = (List<String>) value;
+    public void setValue(List<String> value) {
+        if (value != null) {
+            List<String> valuesToSet = value;
 
             checkboxes.stream()
-                    .filter(c -> valuesToSet.contains(c.getText()))
-                    .forEach(c -> c.setSelected(true));
+                .filter(c -> valuesToSet.contains(c.getText()))
+                .forEach(c -> c.setSelected(true));
 
         } else {
-            throw new IllegalArgumentException("The value has to be a list of strings");
+            throw new IllegalArgumentException("The value is null and can not set");
         }
     }
 

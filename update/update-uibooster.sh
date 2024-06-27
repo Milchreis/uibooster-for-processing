@@ -5,7 +5,7 @@ wget https://github.com/Milchreis/UiBooster/archive/master.zip
 unzip master.zip
 
 # Download dependencies by pom.xml
-apache-maven-3.6.3/bin/mvn install dependency:copy-dependencies -f UiBooster-master/pom.xml
+apache-maven-3.6.3/bin/mvn -DskipTests install dependency:copy-dependencies -f UiBooster-master/pom.xml
 
 # Copy non-testing libs to third-party-libs directory
 rsync -avr \
