@@ -43,7 +43,7 @@ A big thanks goes to the supporters of this project. I thank every single one of
  * Devraj Joshi ([Twitter](https://twitter.com/DevrajJoshi))
  * Ralf Leggett ([GitHub](https://github.com/ralfleggett))
  * PlayStateWolff ([GitHub](https://github.com/PlayStateWolff)) 
- * leuwenn ([Github](https://github.com/leuwenn))
+ * leuwenn ([GitHub](https://github.com/leuwenn))
  * Nicholas Veronico ([GitHub](https://github.com/nicholasveronico))
 
 ## Installation
