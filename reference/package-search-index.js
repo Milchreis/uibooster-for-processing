@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"uibooster"},{"l":"uibooster.components"},{"l":"uibooster.model"},{"l":"uibooster.model.formelements"},{"l":"uibooster.utils"}]
+packageSearchIndex = [{"l":"Alle Packages","u":"allpackages-index.html"},{"l":"uibooster"},{"l":"uibooster.components"},{"l":"uibooster.model"},{"l":"uibooster.model.formelements"},{"l":"uibooster.model.options"},{"l":"uibooster.utils"}];updateSearchResults();

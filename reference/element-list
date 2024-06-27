@@ -2,4 +2,5 @@ uibooster
 uibooster.components
 uibooster.model
 uibooster.model.formelements
+uibooster.model.options
 uibooster.utils
