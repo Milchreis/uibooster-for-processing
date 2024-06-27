@@ -4,7 +4,7 @@
 
 > UiBooster is a lean library to create fast and easy dialogs for utility tools.
 
-This project ports [UiBooster 1.15.2](https://github.com/Milchreis/UiBooster/) full functionally to the Processing eco-system 
+This project ports [UiBooster 1.21.0](https://github.com/Milchreis/UiBooster/) full functionally to the Processing eco-system 
 as a library to create dialogs for your sketch fast as possible.
 With a lot of examples you will learn to use this library in less than five minutes.
 
@@ -12,12 +12,22 @@ If you like this project, and you want to keep me awake 🤪, than please suppor
 
 <a href='https://ko-fi.com/L4L21072C' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi1.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
-## Breaking changes since version 1.12.0
+## Breaking changes 
+
+### since version 1.21.0
+
+In version 1.21.0 of UiBooster some `getValue()` and `setValue()` methods of the FormElements are changed its return. 
+Please check your code after updating if you used UiBooster in earlier versions before.
+
+* Now `ImageFormElement.getValue()` returns the path to the image and not the ImagePanel anymore
+* Now `ListFormElement.setValue()` sets the selected elements and not the list of options. If you want to change the options you have to use `setElements()` method
+* Now `TableFormElement.setValue()` and `getValue()` uses a new TableData-wrapper-class instead of `String[][]`
+
+### since version 1.12.0
 
 In version 1.12.0 of UiBooster the `ChangeListener` and the `FilledForm` are changed. Please check your code after updating if you
 used UiBooster in earlier versions before.
 
-**Breaking changes**
 * Now ChangeListener in form creation has 3 parameter: current form element, new value, your form
     * you will have to add `Form form` as third parameter to your listener
     * Here you can find an [example](https://github.com/Milchreis/UiBooster/blob/master/src/test/java/de/milchreis/uibooster/FormBuilderChangeListenerTest.java#L22)
@@ -34,6 +44,7 @@ A big thanks goes to the supporters of this project. I thank every single one of
  * Ralf Leggett ([Github](https://github.com/ralfleggett))
  * PlayStateWolff ([Github](https://github.com/PlayStateWolff)) 
  * leuwenn ([Github](https://github.com/leuwenn))
+ * Nicholas Veronico ([Github](https://github.com/nicholasveronico))
 
 ## Installation
 If you want to use this library in your processing sketch you can download it via the integrated `Contribution Manager`. 
@@ -299,7 +310,9 @@ booster.createTrayMenu("Food", "screenshots/color.jpg")
 ### Notification
 ![screenshot gallery dialog](https://github.com/Milchreis/UiBooster/blob/master/screenshots/notification.jpg?raw=true)
 ```java
-new UiBooster().createNotification("It's hot and delicious", "Dinner is ready");
+new UiBooster().
+
+createNotification("It's hot and delicious","Dinner is ready");
 ```
 
 ## Options
