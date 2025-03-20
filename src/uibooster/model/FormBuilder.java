@@ -26,6 +26,8 @@ public class FormBuilder {
     private WindowSetting windowSetting;
     private RowFormBuilder rowFormBuilder;
 
+    protected FormBuilder parent;
+
     protected int defaultMarginLeft = 0;
     protected int defaultMarginTop = 0;
     protected int defaultMarginRight = 0;
@@ -52,6 +54,7 @@ public class FormBuilder {
         this.defaultMarginTop = formBuilder.defaultMarginTop;
         this.defaultMarginRight = formBuilder.defaultMarginRight;
         this.defaultMarginBottom = formBuilder.defaultMarginBottom;
+        this.parent = formBuilder.parent;
     }
 
     /**
@@ -228,7 +231,11 @@ public class FormBuilder {
      * @param onClick     expects an implementation of Runnable, which is executed when the button is clicked
      */
     public FormBuilderElementTyped<String> addButton(String buttonLabel, Runnable onClick) {
-        return addButton(null, buttonLabel, (element, form) -> onClick.run());
+        return addButton(null, buttonLabel, (element, form) -> {
+            if (onClick != null) {
+                onClick.run();
+            }
+        });
     }
 
     /**
@@ -769,8 +776,8 @@ public class FormBuilder {
      * Stops the current created row. It has to be used after startRow()-method.
      */
     public FormBuilder endRow() {
-        formElements.add(rowFormBuilder.getRowElement());
-        return this;
+        parent.rowFormBuilder.endRow();
+        return parent;
     }
 
     protected <T> void addElement(FormElement<T> e) {
